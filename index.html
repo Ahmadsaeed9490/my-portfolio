@@ -300,10 +300,8 @@
             </div>
             
             <div class="glass-panel contact-form reveal">
-                <!-- Using FormSubmit for direct email submission -->
-                <form action="https://formsubmit.co/ahmad.code789@gmail.com" method="POST" id="contactForm">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_template" value="table">
+                <!-- Using Formspree for direct email submission -->
+                <form action="https://formspree.io/f/xvzlyego" method="POST" id="contactForm">
                     <div class="form-group">
                         <label>Full Name</label>
                         <input type="text" name="name" placeholder="Ahmad Saeed" required>
@@ -316,7 +314,10 @@
                         <label>Message</label>
                         <textarea name="message" rows="5" placeholder="I'd like to talk about a project..." required></textarea>
                     </div>
-                    <button type="submit" class="btn-primary" style="width: 100%;">Send Message</button>
+                    <button type="submit" class="btn-primary" style="width: 100%;" id="submitBtn">
+                        <span id="btnText">Send Message</span>
+                        <div id="loader" style="display: none; border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top: 3px solid #fff; width: 20px; height: 20px; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+                    </button>
                 </form>
             </div>
 
@@ -333,6 +334,25 @@
     <a href="https://wa.me/923707932815" target="_blank" class="glass-panel" style="position: fixed; bottom: 2rem; right: 2rem; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1000; color: #25D366; border-color: rgba(37, 211, 102, 0.3); box-shadow: 0 10px 25px rgba(37, 211, 102, 0.2); transition: var(--transition-smooth); cursor: pointer; text-decoration: none;">
         <i data-lucide="message-circle" style="width: 30px; height: 30px;"></i>
     </a>
+
+    <!-- Success Popup -->
+    <div class="success-popup" id="successPopup">
+        <div class="success-card">
+            <div class="success-icon">
+                <i data-lucide="check" style="width: 40px; height: 40px;"></i>
+            </div>
+            <h3>Message Sent!</h3>
+            <p>Thank you for reaching out. I'll get back to you as soon as possible.</p>
+            <button onclick="closePopup()" class="btn-primary">Close</button>
+        </div>
+    </div>
+
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 
     <script>
 
@@ -364,7 +384,57 @@
         window.addEventListener('scroll', reveal);
         window.addEventListener('load', reveal);
 
-        // Note: Formspree handles the submission now
+
+        // Form Submission logic
+        const contactForm = document.getElementById('contactForm');
+        const successPopup = document.getElementById('successPopup');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const loader = document.getElementById('loader');
+
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Show loading state
+            btnText.style.display = 'none';
+            loader.style.display = 'block';
+            submitBtn.disabled = true;
+
+            const formData = new FormData(contactForm);
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    contactForm.reset();
+                    successPopup.classList.add('active');
+                } else {
+                    const data = await response.json();
+                    if (Object.hasOwn(data, 'errors')) {
+                        alert(data["errors"].map(error => error["message"]).join(", "));
+                    } else {
+                        alert("Oops! There was a problem submitting your form");
+                    }
+                }
+            } catch (error) {
+                alert("Oops! There was a problem submitting your form");
+            } finally {
+                // Restore button state
+                btnText.style.display = 'block';
+                loader.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        });
+
+        function closePopup() {
+            successPopup.classList.remove('active');
+        }
 
     </script>
 </body>
