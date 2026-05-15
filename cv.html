@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmad Saeed — CV</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #0c0c0b;
+            --ink-2: #3a3935;
+            --ink-3: #7a7970;
+            --paper: #faf9f6;
+            --paper-2: #f1efea;
+            --accent: #1a3a2a;
+            --accent-light: #e6ede9;
+            --rule: #d4d1c8;
+            --gold: #8c6d2f;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: #1a1a18;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--ink);
+            padding: 40px 20px 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 28px;
+            align-self: center;
+        }
+
+        .btn {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 9px 20px;
+            border-radius: 2px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.7);
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: all 0.2s;
+        }
+        .btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+        .btn.primary { background: var(--accent); border-color: var(--accent); color: #e8f0ea; }
+        .btn.primary:hover { background: #254d38; }
+
+        /* ── CV DOCUMENT ── */
+        .cv {
+            background: var(--paper);
+            width: 100%;
+            max-width: 920px;
+            position: relative;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.2);
+        }
+
+        /* Decorative top bar */
+        .cv::before {
+            content: '';
+            display: block;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent) 0%, #2d6a4f 40%, var(--gold) 100%);
+        }
+
+        /* ── HEADER ── */
+        .cv-header {
+            padding: 48px 52px 36px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 32px;
+            align-items: start;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 4rem;
+            line-height: 0.95;
+            letter-spacing: -2px;
+            color: var(--ink);
+        }
+        .name em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .role-line {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 14px;
+        }
+        .role-tag {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            background: var(--accent);
+            color: #d4e8da;
+            padding: 5px 12px;
+            border-radius: 2px;
+        }
+        .role-dash { width: 40px; height: 1px; background: var(--rule); }
+        .role-year { font-size: 0.75rem; color: var(--ink-3); font-weight: 300; letter-spacing: 0.05em; }
+
+        .summary {
+            margin-top: 18px;
+            font-size: 0.88rem;
+            line-height: 1.75;
+            color: var(--ink-2);
+            max-width: 520px;
+            font-weight: 300;
+        }
+
+        .header-photo {
+            width: 108px;
+            height: 108px;
+            object-fit: cover;
+            border-radius: 3px;
+            border: 1px solid var(--rule);
+            filter: grayscale(15%);
+        }
+
+        /* ── BODY ── */
+        .cv-body {
+            display: grid;
+            grid-template-columns: 1fr 260px;
+        }
+
+        /* ── MAIN COLUMN ── */
+        .cv-main {
+            padding: 38px 44px 44px 52px;
+            border-right: 1px solid var(--rule);
+        }
+
+        .section { margin-bottom: 36px; }
+        .section:last-child { margin-bottom: 0; }
+
+        .section-label {
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--rule);
+        }
+
+        /* Experience */
+        .exp-item { margin-bottom: 26px; }
+        .exp-item:last-child { margin-bottom: 0; }
+
+        .exp-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 3px;
+        }
+        .exp-role {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.1rem;
+            color: var(--ink);
+        }
+        .exp-date {
+            font-size: 0.72rem;
+            color: var(--ink-3);
+            font-weight: 300;
+            white-space: nowrap;
+            letter-spacing: 0.03em;
+        }
+        .exp-company {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            margin-bottom: 10px;
+        }
+        .exp-list {
+            padding-left: 0;
+            list-style: none;
+        }
+        .exp-list li {
+            font-size: 0.83rem;
+            line-height: 1.65;
+            color: var(--ink-2);
+            font-weight: 300;
+            padding-left: 14px;
+            position: relative;
+            margin-bottom: 3px;
+        }
+        .exp-list li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--rule);
+            font-size: 0.75rem;
+        }
+
+        /* Projects grid */
+        .proj-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .proj-card {
+            background: var(--paper-2);
+            border: 1px solid var(--rule);
+            border-radius: 2px;
+            padding: 14px 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        .proj-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: var(--accent);
+        }
+        .proj-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 0.9rem;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+        .proj-desc {
+            font-size: 0.75rem;
+            line-height: 1.55;
+            color: var(--ink-3);
+            font-weight: 300;
+        }
+
+        /* ── SIDEBAR ── */
+        .cv-sidebar {
+            padding: 38px 36px 44px 32px;
+            background: var(--paper);
+        }
+
+        .side-section { margin-bottom: 30px; }
+        .side-section:last-child { margin-bottom: 0; }
+
+        /* Contact */
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            margin-bottom: 9px;
+            font-size: 0.78rem;
+            color: var(--ink-2);
+            font-weight: 300;
+        }
+        .contact-icon {
+            width: 14px;
+            color: var(--gold);
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .contact-item a {
+            color: var(--ink-2);
+            text-decoration: none;
+        }
+        .contact-item a:hover { color: var(--accent); }
+
+        .qr-wrap {
+            margin-top: 16px;
+            text-align: center;
+            border: 1px solid var(--rule);
+            padding: 12px 8px 8px;
+            background: white;
+            border-radius: 2px;
+        }
+        .qr-wrap img { width: 64px; display: block; margin: 0 auto; }
+        .qr-label { font-size: 0.6rem; color: var(--ink-3); margin-top: 6px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+        /* Skills */
+        .skill-category { margin-bottom: 14px; }
+        .skill-cat-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink-3);
+            margin-bottom: 7px;
+            font-weight: 500;
+        }
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+        .skill-tag {
+            font-size: 0.7rem;
+            font-weight: 400;
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 3px 9px;
+            border-radius: 2px;
+            border: 1px solid #c8dcd0;
+            letter-spacing: 0.02em;
+        }
+
+        /* Education */
+        .edu-item { margin-bottom: 16px; position: relative; padding-left: 14px; }
+        .edu-item::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 6px;
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+        .edu-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 2px; top: 14px; bottom: -8px;
+            width: 1px;
+            background: var(--rule);
+        }
+        .edu-degree { font-size: 0.82rem; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+        .edu-meta { font-size: 0.72rem; color: var(--ink-3); font-weight: 300; }
+        .edu-focus { font-size: 0.7rem; color: var(--ink-3); margin-top: 2px; font-style: italic; }
+
+        /* Languages */
+        .lang-item { margin-bottom: 12px; }
+        .lang-row { display: flex; justify-content: space-between; font-size: 0.78rem; margin-bottom: 5px; }
+        .lang-name { color: var(--ink-2); font-weight: 400; }
+        .lang-level { color: var(--ink-3); font-weight: 300; }
+        .lang-bar { height: 2px; background: var(--rule); border-radius: 1px; overflow: hidden; }
+        .lang-fill { height: 100%; background: var(--accent); border-radius: 1px; }
+
+        /* Footer */
+        .cv-footer {
+            border-top: 1px solid var(--rule);
+            padding: 18px 52px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .footer-note { 
+            font-size: 0.68rem; 
+            color: var(--ink-3); 
+            letter-spacing: 0.03em; 
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        @media print {
+            body { 
+                background: white; 
+                padding: 0; 
+                margin: 0;
+            }
+            .controls { display: none; }
+            .cv { 
+                box-shadow: none; 
+                max-width: 100%; 
+                border: none; 
+                width: 100%;
+            }
+            
+            /* Aggressive header/footer removal */
+            @page {
+                size: auto;
+                margin: 0mm;
+            }
+            
+            /* Add content padding only inside the CV so headers don't appear */
+            .cv {
+                padding: 20mm;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="controls">
+    <a href="index.html" class="btn">← Back to Portfolio</a>
+    <button onclick="window.print()" class="btn primary">↓ Print / Save PDF</button>
+</div>
+
+<div class="cv">
+
+    <!-- HEADER -->
+    <header class="cv-header">
+        <div>
+            <h1 class="name">Ahmad <em>Saeed</em></h1>
+            <div class="role-line">
+                <span class="role-tag">Laravel Developer</span>
+                <span class="role-dash"></span>
+                <span class="role-year">1+ Year Experience · Lahore, Pakistan</span>
+            </div>
+            <p class="summary">
+                Dynamic full-stack developer specialized in building scalable APIs, automated management systems, and high-performance web applications with Laravel and modern frontend tools.
+            </p>
+        </div>
+        <img src="assets/profile.png" alt="Ahmad Saeed" class="header-photo" onerror="this.style.display='none'">
+    </header>
+
+    <!-- BODY -->
+    <div class="cv-body">
+
+        <!-- MAIN -->
+        <main class="cv-main">
+
+            <section class="section">
+                <div class="section-label">Work Experience</div>
+                <div class="exp-item">
+                    <div class="exp-top">
+                        <span class="exp-role">Laravel Developer</span>
+                        <span class="exp-date">July 2025 — Present</span>
+                    </div>
+                    <div class="exp-company">Nexer Tech Solutions</div>
+                    <ul class="exp-list">
+                        <li>Developed scalable web applications using Laravel, MySQL, and modern frontend tools.</li>
+                        <li>Implemented secure authentication, RESTful APIs, and complex data management features.</li>
+                        <li>Collaborated via Git/GitHub for streamlined version control and team coordination.</li>
+                        <li>Built responsive and interactive UIs using Tailwind CSS and JavaScript.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-label">Key Projects</div>
+                <div class="proj-grid">
+                    <div class="proj-card">
+                        <div class="proj-name">CCTV AI Video Analytics</div>
+                        <p class="proj-desc">AI-powered surveillance with real-time face recognition, threat detection, and automated alerts.</p>
+                    </div>
+                    <div class="proj-card">
+                        <div class="proj-name">NattyPay — FinTech</div>
+                        <p class="proj-desc">Secure mobile banking platform with real-time transaction processing and robust authentication.</p>
+                    </div>
+                    <div class="proj-card">
+                        <div class="proj-name">Task Management API</div>
+                        <p class="proj-desc">High-performance REST API with JWT security, role-based access control, and full PHPUnit coverage.</p>
+                    </div>
+                    <div class="proj-card">
+                        <div class="proj-name">Complaint Management System</div>
+                        <p class="proj-desc">Automated system reducing manual follow-ups by 60%. Includes SLA tracking and admin dashboards.</p>
+                    </div>
+                    <div class="proj-card">
+                        <div class="proj-name">Biometric Attendance System</div>
+                        <p class="proj-desc">Automated employee tracking integrating hardware device data with a custom Laravel backend.</p>
+                    </div>
+                    <div class="proj-card">
+                        <div class="proj-name">A-One Home Textile Group</div>
+                        <p class="proj-desc">Corporate textile platform with premium UI design and elegant product management.</p>
+                    </div>
+                    <div class="proj-card" style="grid-column: 1 / -1;">
+                        <div class="proj-name">Tecmuo IT Solutions <a href="https://www.tkmuo.com/" target="_blank" style="color: var(--gold); font-size: 0.7rem; text-decoration: none; margin-left: 8px;">(tkmuo.com)</a></div>
+                        <p class="proj-desc">Full e-commerce engine with advanced product mapping, category management, and secure payment integration.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- SIDEBAR -->
+        <aside class="cv-sidebar">
+
+            <div class="side-section">
+                <div class="section-label" style="margin-bottom: 14px;">Contact</div>
+                <div class="contact-item">
+                    <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+                    <span>ahmad.code789@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18l3-.01a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14l-.08 2.92z"/></svg>
+                    <span>+92 370 7932815</span>
+                </div>
+                <div class="contact-item">
+                    <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span>Lahore, Pakistan</span>
+                </div>
+                <div class="contact-item">
+                    <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                    <a href="https://linkedin.com/in/ahmadcodes789" target="_blank">linkedin.com/in/ahmadcodes789</a>
+                </div>
+                <div class="qr-wrap">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=128x128&data=https://ahmad-code789.netlify.app/" alt="Portfolio QR">
+                    <div class="qr-label">Scan for portfolio</div>
+                </div>
+            </div>
+
+            <div class="side-section">
+                <div class="section-label" style="margin-bottom: 14px;">Skills</div>
+                <div class="skill-category">
+                    <div class="skill-cat-label">Core Backend</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">PHP · Laravel</span>
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">REST APIs</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-cat-label">Frontend</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">jQuery</span>
+                        <span class="skill-tag">Tailwind CSS</span>
+                        <span class="skill-tag">Bootstrap</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-cat-label">Tools</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Git · GitHub</span>
+                        <span class="skill-tag">Postman</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="side-section">
+                <div class="section-label" style="margin-bottom: 14px;">Education</div>
+                <div class="edu-item">
+                    <div class="edu-degree">BS Computer Science</div>
+                    <div class="edu-meta">Virtual University · 2024 — Present</div>
+                </div>
+                <div class="edu-item">
+                    <div class="edu-degree">FSC Pre-Engineering</div>
+                    <div class="edu-meta">Punjab Group of Colleges · 2024</div>
+                </div>
+                <div class="edu-item">
+                    <div class="edu-degree">Matric — Science</div>
+                    <div class="edu-meta">Govt. High School Dokota · 2022</div>
+                </div>
+            </div>
+
+            <div class="side-section">
+                <div class="section-label" style="margin-bottom: 14px;">Languages</div>
+                <div class="lang-item">
+                    <div class="lang-row">
+                        <span class="lang-name">Urdu</span>
+                        <span class="lang-level">Native</span>
+                    </div>
+                    <div class="lang-bar"><div class="lang-fill" style="width: 100%;"></div></div>
+                </div>
+                <div class="lang-item">
+                    <div class="lang-row">
+                        <span class="lang-name">English</span>
+                        <span class="lang-level">Intermediate</span>
+                    </div>
+                    <div class="lang-bar"><div class="lang-fill" style="width: 72%;"></div></div>
+                </div>
+            </div>
+
+        </aside>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="cv-footer">
+        <!-- <span class="footer-note">Ahmad Saeed · Laravel Developer · Lahore, Pakistan</span>
+        <span class="footer-note">ahmad.code789@gmail.com · +92 370 7932815</span> -->
+    </footer>
+
+</div>
+
+</body>
+</html>
